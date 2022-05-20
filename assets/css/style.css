@@ -1,0 +1,19 @@
+/* Centering the body of the page */
+body {
+    display: block;
+    margin: auto;
+    width: 20%;
+    padding: 10px  
+}
+
+/* Creating Cards for each Question */
+section {
+    display: block;
+}
+button {
+    display: flex;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    background-color: blueviolet;
+    color: whitesmoke;
+}
