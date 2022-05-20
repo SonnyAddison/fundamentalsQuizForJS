@@ -11,15 +11,23 @@
     </head>
     <body>
         <!--Starting page-->
-        <section id='start'>
-            <header>
-                <h1>Coding Quiz Challenge</h1>
-            </header>
-            <p>Try to answer the following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your score and time by ten seconds!</p>
-            <button>Start Quiz</button>
-        </section>
+        <div class="container">
+            <div id="question-container" class="hide"></div>
+            <div id="question">Question</div>
+            <div id="answer-buttons" class = "btn-grid">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+            <div class="controls">
+                <button id="start-btn" class="start-btn btn">Start</button>
+                <button id="finish-btn" class="finish-btn btn hide">Finish</button>
+            </div>
 
-        <!-- Questions to be asked-->
+        </div>
+
+        <!-- Questions to be asked
         <section id='quest1'>
             <h1>JavaScript is</h1>
             <button>double-threaded</button>
@@ -88,12 +96,10 @@
             <button>features</button>
             <button>elements</button>
             <button>functions</button>
-        </section>
+        </section>-->
 
         <!--Last page-->
-        <section id='finish'>
-            <h1>Thank You For Playing</h1>
-        </section>
+   
        
     </body>
 </html>

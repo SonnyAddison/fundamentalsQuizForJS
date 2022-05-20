@@ -1,19 +1,46 @@
-/* Centering the body of the page */
-body {
-    display: block;
-    margin: auto;
-    width: 20%;
-    padding: 10px  
+/* Setting page style */
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-/* Creating Cards for each Question */
-section {
-    display: block;
+/* Setting hue colors*/
+
+/* Setting everything center and in aligment */
+body {
+ padding: 0;
+ margin: 0; 
+ display: flex;
+ width: 100vw;
+ height: 50vh;
+ justify-content: center;
+ align-items: center;
 }
-button {
-    display: flex;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    background-color: blueviolet;
-    color: whitesmoke;
+
+/* Setting Container */
+.container {
+    width: 800px;
+    max-width: 90%;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 0 10px 2px;
+}
+
+/* Allowing for the buttons to be in a grid evenly spaced */
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn {
+    --hue: var(--hue-neutral);
+    border: 1px solid hsl(var(--hue-neutral), 100%, 30%);
+    background-color:blueviolet;
+    border-radius: 15px;
+    padding: 5px 10px;
+    color: white;
+   
+
 }
