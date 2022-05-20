@@ -33,7 +33,7 @@ body {
     gap: 10px;
     margin: 20px 0;
 }
-
+/* Set button style */
 .btn {
     --hue: var(--hue-neutral);
     border: 1px solid hsl(var(--hue-neutral), 100%, 30%);
@@ -41,6 +41,30 @@ body {
     border-radius: 15px;
     padding: 5px 10px;
     color: white;
-   
+}
 
+.start-btn, .finish-btn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+/* Changing Button color if selected correct or wrong */
+
+.btn.correct {
+    background-color: green;
+}
+
+.btn.wrong {
+    background-color: red;
 }
