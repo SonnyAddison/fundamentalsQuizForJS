@@ -1,25 +1,51 @@
+/* Global Elements */
 const startButton = document.getElementById("start-btn");
-const questionContainerElement = document.getElementById("question-container");
+const questionContainerElement = document.getElementById("questionContainer");
 const questionElement = document.getElementById("question");
-const answerButtonsElement = document.getElementById("answer-buttons");
+const answerButtonsElement = document.getElementById("answerButtons");
+const timeStart = document.getElementById("timer");
+let  setTime = 30;
+timeStart.innerHTML = setTime;
+let randomQuestions, currentQuestion; 
 
-let shuffledQuestions, currentQuestionIndex; 
 
 
-startButton.addEventListener("click", startGame);
 
-
+/* Setting up how to start the game */
 function startGame() {
     console.log('started');
     startButton.classList.add("hide");
-    shuffledQuestions = questions.sort(() => Math.random() - .5);
-    currentQuestionIndex = 0;
+    answerButtonsElement.classList.remove("hide")
+    randomQuestions = questions.sort(() => Math.random() - .5);
+    currentQuestion = 0;
+    const countDown = setInterval(()=>{
+        setTime--,
+        timeStart.innerHTML = setTime;
+        if(setTime < 0 || setTime <1){
+            clearInterval(countDown);
+        }
+    },1000)
     setNextQuestion ()
+    
 }
+startButton.addEventListener("click", startGame);
 
+/* Setting countdown fucntion */
+const countDown = setInterval((event)=>{
+    event.preventDefault();
+    setTime--,
+    timeStart.innerHTML = setTime;
+    if(setTime < 0 || setTime <1){
+        clearInterval(countDown);
+    }
+},1000)
+
+
+/* Sets the next question to be asked*/
 function setNextQuestion() {
     resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
+    showQuestion(randomQuestions[currentQuestion]);
+
 }
 
 function showQuestion (question) {
@@ -35,19 +61,20 @@ function showQuestion (question) {
     answerButtonsElement.appendChild(button);
     });
 }
-
+/* To reset the game at the end */
 function resetState() {
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
+
 function selectAnswer(event) {
     const selectButton = event.target;
     const correct = selectButton.dataset.correct;
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })
-    if (shuffledQuestions.length > currentQuestionIndex + 1);
+    if (randomQuestions.length > currentQuestion + 1);
     else {
         startButton.innerText = "Restart";
         startButton.classList.remove("hide");
@@ -59,7 +86,7 @@ function setStatusClass(element, correct) {
     if (correct) {
         element.classList.add("correct")
     }
-    else  {
+    else {
         element.classList.add("wrong")
     } 
 }       
@@ -69,7 +96,7 @@ function clearStatusClass(element) {
     element.classList.remove("wrong");
 }
 
-
+/* Questions to display */
 const questions = [
     {
         question: "Math.random(x) returns a whole number between?",
@@ -81,7 +108,7 @@ const questions = [
         ]
     },
     {
-        question: "JavaScript is",
+        question: "JavaScript is a?",
         answers: [
             { text: "double-threaded", correct: false},
             { text: "dynamic language", correct: true},
@@ -118,11 +145,11 @@ const questions = [
         question: "True or False: const, let, var are all used the same way?",
         answers: [
             { text: "True", correct: false},
-            { text: "True", correct: true},
+            { text: "False", correct: true},
         ]
     },
     {
-        quesiton: "How many Primitive Values are there in JavaScritp?",
+        question: "How many Primitive Values are there in JavaScritp?",
         answers: [
             { text: "7", correct: true},
             { text: "6", correct: false},
@@ -138,12 +165,12 @@ const questions = [
         ]
     },
     {
-        quesiton: "NaN stands for?",
+        question: "NaN stands for?",
         answers: [
             { text: "Now and Null", correct: false},
             { text: "Null and Null", correct: false},
             { text: "Not a Numberical", correct: false},
-            { text: "Not a Number", correct: false},
+            { text: "Not a Number", correct: true},
         ]
     },
     {
@@ -152,20 +179,5 @@ const questions = [
             { text: "True", correct: true},
             { text: "False", correct: false,}
         ]
-    }.
-
+    }
 ]
-   
-
-
-<section id='quest10'>
-    <h1>In JavaScript, closures are created/needed every time a function is created?</h1>
-    <button>True</button>
-    <button>False</button>
-</section>
-<section id='quest11'>
-    <h1>Arguments are/is an Array-like objet that is accessible inside what?</h1>
-    <button>arrays</button>
-    <button>features</button>
-    <button>elements</button>
-    <button>functions</button> */

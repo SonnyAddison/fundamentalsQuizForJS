@@ -1,10 +1,37 @@
 /* Setting page style */
 *, *::before, *::after {
     box-sizing: border-box;
+    font-size: 20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-/* Setting hue colors*/
+/* Setting Start page font size*/
+strong {
+    font-size: 30px;
+}
+
+/* Setting questions to be centered over buttons*/
+#question {
+    text-align: center;
+}
+
+ /* Placeing containters */
+ h2 {
+     text-align: center;
+ }
+
+
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+.topLeft {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
 
 /* Setting everything center and in aligment */
 body {
@@ -12,7 +39,7 @@ body {
  margin: 0; 
  display: flex;
  width: 100vw;
- height: 50vh;
+ height: 100vh;
  justify-content: center;
  align-items: center;
 }
@@ -20,6 +47,22 @@ body {
 /* Setting Container */
 .container {
     width: 800px;
+    max-width: 90%;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 0 10px 2px;
+}
+
+.timingContainer {
+    width: 400px;
+    max-width: 90%;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 0 10px 2px;
+}
+
+.scoreContainer {
+    width: 400px;
     max-width: 90%;
     border-radius: 5px;
     padding: 15px;
@@ -35,17 +78,23 @@ body {
 }
 /* Set button style */
 .btn {
-    --hue: var(--hue-neutral);
-    border: 1px solid hsl(var(--hue-neutral), 100%, 30%);
+    
     background-color:blueviolet;
     border-radius: 15px;
     padding: 5px 10px;
     color: white;
 }
 
+.btn:hover {
+    cursor: pointer;
+    box-shadow: 0rem 0.4rem 0.8rem 0rem aqua;
+   }
+
+ /*Formates Start and Finsish buttons */
 .start-btn, .finish-btn {
     font-size: 1.5rem;
     font-weight: bold;
+    margin: 18Px;
     padding: 10px 20px;
 }
 
@@ -55,6 +104,7 @@ body {
     align-items: center;
 }
 
+/*  Setting up the ablity to hide buttons" */
 .hide {
     display: none;
 }
