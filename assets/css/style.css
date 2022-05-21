@@ -16,7 +16,7 @@ strong {
 }
 
  /* Placeing containters */
- h2 {
+ h1,h2, p {
      text-align: center;
  }
 

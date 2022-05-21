@@ -4,6 +4,9 @@ const questionContainerElement = document.getElementById("questionContainer");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answerButtons");
 const timeStart = document.getElementById("timer");
+const nextPage = document.getElementById("savePage");
+const startPage = document.getElementById("startPage");
+const scorePoints = 10
 let  setTime = 30;
 timeStart.innerHTML = setTime;
 let randomQuestions, currentQuestion; 
@@ -18,6 +21,7 @@ function startGame() {
     answerButtonsElement.classList.remove("hide")
     randomQuestions = questions.sort(() => Math.random() - .5);
     currentQuestion = 0;
+    score = 0
     const countDown = setInterval(()=>{
         setTime--,
         timeStart.innerHTML = setTime;
@@ -25,71 +29,60 @@ function startGame() {
             clearInterval(countDown);
         }
     },1000)
-    setNextQuestion ()
-    
+    setNextQuestion ()    
 }
 startButton.addEventListener("click", startGame);
 
-/* Setting countdown fucntion */
-const countDown = setInterval((event)=>{
-    event.preventDefault();
-    setTime--,
-    timeStart.innerHTML = setTime;
-    if(setTime < 0 || setTime <1){
-        clearInterval(countDown);
-    }
-},1000)
-
-
 /* Sets the next question to be asked*/
 function setNextQuestion() {
-    resetState()
+    resetState();
     showQuestion(randomQuestions[currentQuestion]);
 
 }
-
+ /*Shows the question */
 function showQuestion (question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerText = answer.text
         button.classList.add("btn");
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
+        if (answer.correct) {         
+            button.dataset.correct = answer.correct;
         }
     button.addEventListener("click", selectAnswer);
     answerButtonsElement.appendChild(button);
     });
 }
-/* To reset the game at the end */
+/* To reset each question */
 function resetState() {
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
+
+
 function selectAnswer(event) {
     const selectButton = event.target;
     const correct = selectButton.dataset.correct;
-    Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
+    currentQuestion++
+    setNextQuestion()
     if (randomQuestions.length > currentQuestion + 1);
     else {
-        startButton.innerText = "Restart";
-        startButton.classList.remove("hide");
-    } 
+        nextPage.classList.remove("hide");
+        startPage.classList.add("hide");
+    }
 }
 
 function setStatusClass(element, correct) {
-    clearStatusClass(element)
+    clearStatusClass(element)   
     if (correct) {
-        element.classList.add("correct")
+        element.classList.add("correct");        
     }
     else {
         element.classList.add("wrong")
     } 
-}       
+}  
 
 function clearStatusClass(element) {
     element.classList.remove("correct");
@@ -106,6 +99,7 @@ const questions = [
             { text: "0 and x-0", correct: false},
             { text: "0 and x-1", correct: true},
         ]
+       
     },
     {
         question: "JavaScript is a?",
