@@ -1,89 +1,163 @@
-const startButton = document.getElementById("start-btn")
+const startButton = document.getElementById("start-btn");
+const questionContainerElement = document.getElementById("question-container");
+const questionElement = document.getElementById("question");
+const answerButtonsElement = document.getElementById("answer-buttons");
 
-startButton.addEventListner("click", startGame)
-
-
-
-
-
+let shuffledQuestions, currentQuestionIndex; 
 
 
-function startGame (){
+startButton.addEventListener("click", startGame);
+
+
+function startGame() {
     console.log('started');
+    startButton.classList.add("hide");
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
+    currentQuestionIndex = 0;
+    setNextQuestion ()
 }
 
-function setNextQuestion () {
-
+function setNextQuestion() {
+    resetState()
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
-function selectAnswer (){
+function showQuestion (question) {
+    questionElement.innerText = question.question
+    question.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerText = answer.text
+        button.classList.add("btn");
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        }
+    button.addEventListener("click", selectAnswer);
+    answerButtonsElement.appendChild(button);
+    });
+}
 
+function resetState() {
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    }
+}
+function selectAnswer(event) {
+    const selectButton = event.target;
+    const correct = selectButton.dataset.correct;
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+    if (shuffledQuestions.length > currentQuestionIndex + 1);
+    else {
+        startButton.innerText = "Restart";
+        startButton.classList.remove("hide");
+    } 
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element)
+    if (correct) {
+        element.classList.add("correct")
+    }
+    else  {
+        element.classList.add("wrong")
+    } 
+}       
+
+function clearStatusClass(element) {
+    element.classList.remove("correct");
+    element.classList.remove("wrong");
 }
 
 
+const questions = [
+    {
+        question: "Math.random(x) returns a whole number between?",
+        answers: [
+            { text: "-1 and x-1", corrrect: false},
+            { text: "0 and x-2", correct: false},
+            { text: "0 and x-0", correct: false},
+            { text: "0 and x-1", correct: true},
+        ]
+    },
+    {
+        question: "JavaScript is",
+        answers: [
+            { text: "double-threaded", correct: false},
+            { text: "dynamic language", correct: true},
+            { text: "non-supporting", correct: false},
+            { text: "gadget-oriented", correct: false},
+        ]
+    },
+    {
+        question: "A variable is a container for a?",
+        answers: [
+            { text: "value", correct: true},
+            { text: "name", correct: false},
+            { text: "place", correct: false},
+            { text: "container", correct: false},
+        ]
+    },
+    {
+        question: "To help stop hoisting JavaScript prefers the use of what instead of var?",
+        answers: [
+            { text: "help", correct: false},
+            { text: "hoisting", correct: false},
+            { text: "let", correct: true},
+            { text: "const", correct: false},
+        ]
+    },
+    {
+        question: "True of False: a const can be changed through reassignment?",
+        answers: [
+            { text: "True", correct: false},
+            { text: "False", correct: true},
+        ]
+    },
+    {
+        question: "True or False: const, let, var are all used the same way?",
+        answers: [
+            { text: "True", correct: false},
+            { text: "True", correct: true},
+        ]
+    },
+    {
+        quesiton: "How many Primitive Values are there in JavaScritp?",
+        answers: [
+            { text: "7", correct: true},
+            { text: "6", correct: false},
+            { text: "8", correct: false},
+            { text: "15", correct: false},
+        ]
+    },
+    {
+        question: "Objects are a Primitive Value?",
+        answers: [
+            { text: "True", correct: false},
+            { text: "False", correct: true},
+        ]
+    },
+    {
+        quesiton: "NaN stands for?",
+        answers: [
+            { text: "Now and Null", correct: false},
+            { text: "Null and Null", correct: false},
+            { text: "Not a Numberical", correct: false},
+            { text: "Not a Number", correct: false},
+        ]
+    },
+    {
+        question: "In JavaScript, closures are created/needed every time a function is created?",
+        answers: [
+            { text: "True", correct: true},
+            { text: "False", correct: false,}
+        ]
+    }.
+
+]
+   
 
 
-
-
-
-/*
-<section id='quest1'>
-    <h1>JavaScript is</h1>
-    <button>double-threaded</button>
-    <button>dynamic language</button>
-    <button>non-supporting</button>
-    <button>gadget-oriented</button>
-</section>
-<section id='quest2'>
-    <h1 >Math.random(x) returns a whole number between</h1>
-    <button>0 and x-2</button>
-    <button>-1 and x-1</button>
-    <button>0 and x-0</button>
-    <button>0 and x-1</button>
-</section>
-<section id='quest3'>
-    <h1>A variable is a container for a</h1>
-    <button>value</button>
-    <button>name</button>
-    <button>place</button>
-    <button>container</button>
-</section>
-<section id='quest4'>
-    <h1>To help stop hoisting JavaScript prefers the use of what instead of var?</h1>
-    <button>help</button>
-    <button>hoisting</button>
-    <button>let</button>
-    <button>const</button>
-</section>
-<section id='quest5'>
-    <h1>True or False a const can be changed through reassignment?</h1>
-    <button>True</button>
-    <button>False</button>
-</section>
-<section id='quest6'>
-    <h1>Ture or False: const, let, var are all the same thing?</h1>
-    <button>True</button>
-    <button>False</button>
-</section>
-<section id='quest7'>
-    <h1>How many Primitive Values are there in JavaScript?</h1>
-    <button>7</button>
-    <button>6 </button>
-    <button>8</button>
-    <button>15</button>
-</section>
-<section id='quest8'>
-    <h1>Objects are a primitive value</h1>
-    <button>Ture</button>
-    <button>False</button>
-</section>
-<section id='quest9'>
-    <h1>NaN stands for</h1>
-    <button>Now and Null</button>
-    <button>Null and Null</button>
-    <button>Not a Numberical</button>
-    <button>Not a Number</button>
-</section>
 <section id='quest10'>
     <h1>In JavaScript, closures are created/needed every time a function is created?</h1>
     <button>True</button>
