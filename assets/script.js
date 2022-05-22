@@ -8,14 +8,10 @@ const nextPage = document.getElementById("savePage");
 const startPage = document.getElementById("startPage");
 let scoreDisplay = document.getElementById("finalScore")
 const scorePoints = 10
-let score = 0;
 let  setTime = 45;
 timeStart.innerHTML = setTime;
+
 let randomQuestions, currentQuestion; 
-
-
-
-
 
 /* Setting the start of the game */
 function startGame() {
@@ -24,33 +20,40 @@ function startGame() {
     answerButtonsElement.classList.remove("hide")
     randomQuestions = questions.sort(() => Math.random() - .5);
     currentQuestion = 0;
-    score = 0
-    const countDown = setInterval(()=>{
+    score = 0;
+    countdown();
+    /*const countDown = setInterval(()=>{
+        setTime--,
+        timeStart.innerHTML = setTime;
+        if(setTime < 0 || setTime <1){
+            clearInterval(countDown);
+        }
+    },1000); */
+    setNextQuestion()          
+}
+startButton.addEventListener("click", startGame);
+
+function countdown (){
+   const countDown = setInterval(()=>{
         setTime--,
         timeStart.innerHTML = setTime;
         if(setTime < 0 || setTime <1){
             clearInterval(countDown);
         }
     },1000); 
-    setNextQuestion()          
 }
-startButton.addEventListener("click", startGame);
 
 /* Sets the next question to be asked*/
 function setNextQuestion() {
-    if(questions.length === 0){
-        localStorage.setItem("currentScore", score)
-    }
     resetState();
     showQuestion(randomQuestions[currentQuestion]);
-
 }
  /*Shows the question */
 function showQuestion (question) {
     questionElement.innerText = question.question
     question.answers.forEach(answer => {
         const button = document.createElement("button");
-        button.innerText = answer.text
+        button.innerText = answer.text;
         button.classList.add("btn");
         if (answer.correct) {         
             button.dataset.correct = answer.correct;
@@ -73,10 +76,7 @@ function selectAnswer(event) {
     setStatusClass(document.body,correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
-    })
-    if(setStatusClass === "correct") {
-        increaseScore(scorePoints)
-    }
+    })      
     setTimeout(() => {
         resetState()
         setNextQuestion()
@@ -85,22 +85,23 @@ function selectAnswer(event) {
     if (randomQuestions.length > currentQuestion + 1);
     else {
         nextPage.classList.remove("hide");
-        startPage.classList.add("hide");
+        startPage.classList.add("hide");       
+
     }
 }
-
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
         element.classList.add("correct");   
     } else {
-        element.classList.add("wrong");
+        element.classList.add("wrong");      
     }
 }
 
 function clearStatusClass(element) {
     element.classList.remove("correct");
     element.classList.remove("wrong");
+    
 }
 
 /* Questions to display */
@@ -146,7 +147,7 @@ const questions = [
         correct: 3, 
     },
     {
-        question: "True of False: a const can be changed through reassignment?",
+        question: "True or False: a const can be changed through reassignment?",
         answers: [
             { text: "True", correct: false},
             { text: "False", correct: true},
@@ -198,3 +199,12 @@ const questions = [
         correct: 1, 
     }
 ]
+
+/* Global for Final score container
+const saveButton = document.getElementById("saveButton");
+const finalScore = document.getElementById("finalScore");
+const currentScore = document.getElementById("currentScore");
+
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];*/
