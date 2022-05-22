@@ -118,3 +118,17 @@ body {
 .btn.wrong {
     background-color: red;
 }
+
+@media screen and (max-with:800px) {
+    .container {
+     min-width: 200px;
+      
+    }    
+    .timingContainer {
+       min-width: 100px;
+    }    
+    .scoreContainer {
+      min-width: 100px;
+    }
+    
+}

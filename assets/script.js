@@ -6,15 +6,18 @@ const answerButtonsElement = document.getElementById("answerButtons");
 const timeStart = document.getElementById("timer");
 const nextPage = document.getElementById("savePage");
 const startPage = document.getElementById("startPage");
+let scoreDisplay = document.getElementById("finalScore")
 const scorePoints = 10
-let  setTime = 30;
+let score = 0;
+let  setTime = 45;
 timeStart.innerHTML = setTime;
 let randomQuestions, currentQuestion; 
 
 
 
 
-/* Setting up how to start the game */
+
+/* Setting the start of the game */
 function startGame() {
     console.log('started');
     startButton.classList.add("hide");
@@ -28,13 +31,16 @@ function startGame() {
         if(setTime < 0 || setTime <1){
             clearInterval(countDown);
         }
-    },1000)
-    setNextQuestion ()    
+    },1000); 
+    setNextQuestion()          
 }
 startButton.addEventListener("click", startGame);
 
 /* Sets the next question to be asked*/
 function setNextQuestion() {
+    if(questions.length === 0){
+        localStorage.setItem("currentScore", score)
+    }
     resetState();
     showQuestion(randomQuestions[currentQuestion]);
 
@@ -59,14 +65,23 @@ function resetState() {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
-
-
-
+/* Allows each answer button to be selectable, changes by color if correct or wrong, and transitions through 10 questions */
 function selectAnswer(event) {
+    /* allows for the ability to know which button is selected. */
     const selectButton = event.target;
     const correct = selectButton.dataset.correct;
-    currentQuestion++
-    setNextQuestion()
+    setStatusClass(document.body,correct)
+    Array.from(answerButtonsElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+    if(setStatusClass === "correct") {
+        increaseScore(scorePoints)
+    }
+    setTimeout(() => {
+        resetState()
+        setNextQuestion()
+    }, 1000)
+        currentQuestion++
     if (randomQuestions.length > currentQuestion + 1);
     else {
         nextPage.classList.remove("hide");
@@ -75,14 +90,13 @@ function selectAnswer(event) {
 }
 
 function setStatusClass(element, correct) {
-    clearStatusClass(element)   
+    clearStatusClass(element);
     if (correct) {
-        element.classList.add("correct");        
+        element.classList.add("correct");   
+    } else {
+        element.classList.add("wrong");
     }
-    else {
-        element.classList.add("wrong")
-    } 
-}  
+}
 
 function clearStatusClass(element) {
     element.classList.remove("correct");
@@ -94,12 +108,12 @@ const questions = [
     {
         question: "Math.random(x) returns a whole number between?",
         answers: [
-            { text: "-1 and x-1", corrrect: false},
-            { text: "0 and x-2", correct: false},
+            { text: "-1 and x-1", correct: false},
+            { text: "0 and x-2", correct: false}, 
             { text: "0 and x-0", correct: false},
             { text: "0 and x-1", correct: true},
-        ]
-       
+        ],
+        correct: 4,       
     },
     {
         question: "JavaScript is a?",
@@ -108,16 +122,18 @@ const questions = [
             { text: "dynamic language", correct: true},
             { text: "non-supporting", correct: false},
             { text: "gadget-oriented", correct: false},
-        ]
+        ],
+        correct: 2,
     },
     {
         question: "A variable is a container for a?",
         answers: [
             { text: "value", correct: true},
-            { text: "name", correct: false},
+            { text: "name", correct: false}, 
             { text: "place", correct: false},
             { text: "container", correct: false},
-        ]
+        ],
+        correct: 1,
     },
     {
         question: "To help stop hoisting JavaScript prefers the use of what instead of var?",
@@ -126,21 +142,24 @@ const questions = [
             { text: "hoisting", correct: false},
             { text: "let", correct: true},
             { text: "const", correct: false},
-        ]
+        ],
+        correct: 3, 
     },
     {
         question: "True of False: a const can be changed through reassignment?",
         answers: [
             { text: "True", correct: false},
             { text: "False", correct: true},
-        ]
+        ],
+        correct: 2,
     },
     {
         question: "True or False: const, let, var are all used the same way?",
         answers: [
             { text: "True", correct: false},
             { text: "False", correct: true},
-        ]
+        ],
+        correct: 2,
     },
     {
         question: "How many Primitive Values are there in JavaScritp?",
@@ -148,15 +167,17 @@ const questions = [
             { text: "7", correct: true},
             { text: "6", correct: false},
             { text: "8", correct: false},
-            { text: "15", correct: false},
-        ]
+            { text: "15",correct: false},
+        ],
+        correct: 1, 
     },
     {
         question: "Objects are a Primitive Value?",
         answers: [
             { text: "True", correct: false},
             { text: "False", correct: true},
-        ]
+        ],
+        correct: 2, 
     },
     {
         question: "NaN stands for?",
@@ -165,13 +186,15 @@ const questions = [
             { text: "Null and Null", correct: false},
             { text: "Not a Numberical", correct: false},
             { text: "Not a Number", correct: true},
-        ]
+        ],
+        correct: 4,
     },
     {
         question: "In JavaScript, closures are created/needed every time a function is created?",
         answers: [
             { text: "True", correct: true},
             { text: "False", correct: false,}
-        ]
+        ],
+        correct: 1, 
     }
 ]
