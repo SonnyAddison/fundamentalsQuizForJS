@@ -39,16 +39,12 @@
             </div>
         </section>
         <section id="savePage" class="hide">
-            <div class="scoreContainer">
+            <div id="highScores" class="scoreContainer">
                 <h1>You have finished the Quiz</h1>
-                <h2>Your score is</h2>
-                <p id="finalScore">100</p>
-                <form>
-                    <label for="initials">Initials</label>
-                    <input type="text" id="initails" name="initials" value="SMA">
-                    <input type="submit" value="Save" id="saveButton" onclick="saveHighScore(event)">
-                </form>
-
+                <h2 id="finalScore">Your score is</h2>
+                <ol id="highScoresList"></ol>
+                <button class="start-btn btn">Save</button>
+                <button class="start-btn btn">Clear</button>           
             </div>
 
         </section>

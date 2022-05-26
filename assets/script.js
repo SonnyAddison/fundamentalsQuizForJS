@@ -6,12 +6,18 @@ const answerButtonsElement = document.getElementById("answerButtons");
 const timeStart = document.getElementById("timer");
 const nextPage = document.getElementById("savePage");
 const startPage = document.getElementById("startPage");
-let scoreDisplay = document.getElementById("finalScore")
-const scorePoints = 10
+const highScoreList = document.getElementById("highScoreList");
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 let  setTime = 45;
 timeStart.innerHTML = setTime;
-
 let randomQuestions, currentQuestion; 
+
+
+highScoresList.innerHTML = highScores;
+highScores.map( score => {
+    return `<li class="highScore">"${score.name} - ${score.score}</li>`;
+}).join("")
+
 
 /* Setting the start of the game */
 function startGame() {
@@ -21,14 +27,7 @@ function startGame() {
     randomQuestions = questions.sort(() => Math.random() - .5);
     currentQuestion = 0;
     score = 0;
-    countdown();
-    /*const countDown = setInterval(()=>{
-        setTime--,
-        timeStart.innerHTML = setTime;
-        if(setTime < 0 || setTime <1){
-            clearInterval(countDown);
-        }
-    },1000); */
+    countdown();  
     setNextQuestion()          
 }
 startButton.addEventListener("click", startGame);
@@ -73,7 +72,7 @@ function selectAnswer(event) {
     /* allows for the ability to know which button is selected. */
     const selectButton = event.target;
     const correct = selectButton.dataset.correct;
-    setStatusClass(document.body,correct)
+    setStatusClass(document.body,correct)         
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })      
@@ -82,19 +81,23 @@ function selectAnswer(event) {
         setNextQuestion()
     }, 1000)
         currentQuestion++
-    if (randomQuestions.length > currentQuestion + 1);
+    if (randomQuestions.length > currentQuestion + 0);
     else {
         nextPage.classList.remove("hide");
-        startPage.classList.add("hide");       
+        startPage.classList.add("hide"); 
+    }      
 
-    }
+    
 }
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
-        element.classList.add("correct");   
+        element.classList.add("correct");  
+        
     } else {
-        element.classList.add("wrong");      
+        element.classList.add("wrong");
+        
+             
     }
 }
 
@@ -200,11 +203,3 @@ const questions = [
     }
 ]
 
-/* Global for Final score container
-const saveButton = document.getElementById("saveButton");
-const finalScore = document.getElementById("finalScore");
-const currentScore = document.getElementById("currentScore");
-
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];*/
