@@ -7,16 +7,14 @@ const timeStart = document.getElementById("timer");
 const nextPage = document.getElementById("savePage");
 const startPage = document.getElementById("startPage");
 const highScoreList = document.getElementById("highScoreList");
-const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
 let  setTime = 45;
-timeStart.innerHTML = setTime;
+let score = 0
+
 let randomQuestions, currentQuestion; 
 
 
-highScoresList.innerHTML = highScores;
-highScores.map( score => {
-    return `<li class="highScore">"${score.name} - ${score.score}</li>`;
-}).join("")
+
 
 
 /* Setting the start of the game */
@@ -32,6 +30,8 @@ function startGame() {
 }
 startButton.addEventListener("click", startGame);
 
+/*Count down*/
+timeStart.innerHTML = setTime;
 function countdown (){
    const countDown = setInterval(()=>{
         setTime--,
@@ -72,7 +72,8 @@ function selectAnswer(event) {
     /* allows for the ability to know which button is selected. */
     const selectButton = event.target;
     const correct = selectButton.dataset.correct;
-    setStatusClass(document.body,correct)         
+    setStatusClass(document.body,correct) 
+            
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })      
@@ -85,19 +86,14 @@ function selectAnswer(event) {
     else {
         nextPage.classList.remove("hide");
         startPage.classList.add("hide"); 
-    }      
-
-    
+    }         
 }
 function setStatusClass(element, correct) {
     clearStatusClass(element);
     if (correct) {
-        element.classList.add("correct");  
-        
+        element.classList.add("correct");                
     } else {
-        element.classList.add("wrong");
-        
-             
+        element.classList.add("wrong"); 
     }
 }
 
