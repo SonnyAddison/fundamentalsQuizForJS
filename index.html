@@ -13,7 +13,7 @@
         <!--Starting page-->
         <section id="startPage">
             <div class="container">
-                <div id="questionContainer" class="hide"></div>
+                <div id="questionContainer" class="hide" ></div>
                 <div id="question"><strong>JavaScript Coding Quiz Challenge</strong><br><br>
                 Try to answer the following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your score and reduce your time by 5 seconds! </div>
                 <div id="answerButtons" class = "btn-grid hide">
@@ -23,35 +23,39 @@
                     <button class="btn" data-number="4">Answer 4</button>
                 </div>
                 <div class="controls">
-                    <button id="start-btn" class="start-btn btn">Start</button>
-                    <button id="finish-btn" class="finish-btn btn hide">Finish</button>
+                    <button id="start-btn" class="control-btn btn">Start</button>
+                    
                 </div>                
             </div>
+        <!-- Time container to count down-->
         </section>
         <section class="topright">
             <div class="timingContainer">
                 <h2 id="timer">00:00</h2>
             </div>
         </section>
+        <!--High Score list-->
         <section class="topLeft">
             <div class="scoreContainer">
-                <h2 id="score">Highscores</h2>
+                <h2></h2>Highscores</h2>
+                <ol class="highScoresList"></ol>
+                
             </div>
         </section>
         <section id="savePage" class="hide">
-            <div id="highScores" class="scoreContainer">
+            <div id="highScores" class="finishedContainer">
                 <h1>You have finished the Quiz</h1>
-                <h2 id="finalScore">Your score is</h2>
-                <ol id="highScoresList"></ol>
-                <button class="start-btn btn">Save</button>
-                <button class="start-btn btn">Clear</button>           
+                <h2>Your score is<br><span id="finalScore">0</span></h2>
+                <div class="controls">
+                    <Form class="endFormContainer">
+                        <h3>Enter you intials below to save your score!</h3>
+                        <input type="text" name="intials" id="intials" placeholder="Enter your intitals" >
+                        <button class="btn" id="saveButton" type="submit" onClick="saveHighScore(event)">Save</button> 
+                        <button class="btn" id="clear" type="submit" onClick="clearHighScore(event)">Clear</button>
+                        <button class="btn" id="restart">Restart</button>                       
+                    </Form>                                          
             </div>
-
         </section>
-        <script src="assets/script.js"></script>
-
-        
-   
-       
+       <script src="assets/script.js"></script>     
     </body>
 </html>

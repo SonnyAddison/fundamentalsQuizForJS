@@ -1,5 +1,6 @@
 /* Global Elements */
 const startButton = document.getElementById("start-btn");
+const restartButton = document.getElementById("restart")
 const questionContainerElement = document.getElementById("questionContainer");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answerButtons");
@@ -7,6 +8,7 @@ const timeStart = document.getElementById("timer");
 const nextPage = document.getElementById("savePage");
 const startPage = document.getElementById("startPage");
 const highScoreList = document.getElementById("highScoreList");
+
 
 let  setTime = 45;
 let score = 0
@@ -28,7 +30,9 @@ function startGame() {
     countdown();  
     setNextQuestion()          
 }
+
 startButton.addEventListener("click", startGame);
+
 
 /*Count down*/
 timeStart.innerHTML = setTime;
@@ -84,7 +88,7 @@ function selectAnswer(event) {
         currentQuestion++
     if (randomQuestions.length > currentQuestion + 0);
     else {
-        nextPage.classList.remove("hide");
+        savePage.classList.remove("hide");
         startPage.classList.add("hide"); 
     }         
 }
